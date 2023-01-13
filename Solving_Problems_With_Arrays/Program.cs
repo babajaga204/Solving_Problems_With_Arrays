@@ -1,4 +1,5 @@
 ﻿using System.IO.Enumeration;
+using System.Text;
 
 namespace Solving_Problems_With_Arrays
 {
@@ -10,8 +11,45 @@ namespace Solving_Problems_With_Arrays
             //int[] nums2 = { 4,5,9,10 };
             //Exercise3_3(nums1, nums1.Length); // Expected false
             //Exercise3_3(nums2, nums2.Length); // Expected true
+            string decipheredText = Encode("HeyWhatsUp");
+            Console.WriteLine(decipheredText);
+            string decoded = Decode(decipheredText);
+            Console.WriteLine(decoded);
 
-            Console.WriteLine(Encode("Heyhowareyou"));
+        }
+
+        private static string Encode(string plaintext)
+        {
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string key = "MNBVCXZLKJHGFDSAPOIUYTREWQ";
+            plaintext = plaintext.ToUpper();
+            char[] codeArray = new char[plaintext.Length];
+
+            for (var i = 0; i < plaintext.Length; i++)
+            {
+                int cipherIndex = alphabet.IndexOf(plaintext[i]);
+                codeArray[i] = key[cipherIndex];
+            }
+
+            string code = new string(codeArray);
+            return code;
+        }
+
+        private static string Decode(string code)
+        {
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string key = "MNBVCXZLKJHGFDSAPOIUYTREWQ";
+            code = code.ToUpper();
+            char[] charArray = new char[code.Length];
+
+            for (var i = 0; i < code.Length; i++)
+            {
+                int decipherIndex = key.IndexOf(code[i]);
+                charArray[i] = alphabet[decipherIndex];
+            }
+
+            string decipherCode = new string(charArray);
+            return decipherCode;
         }
 
         private static bool Exercise3_3(int[] array, int arraySize)
@@ -20,25 +58,8 @@ namespace Solving_Problems_With_Arrays
             {
                 if (array[i] < array[i - 1]) return false;
             }
+
             return true;
         }
-
-        private static string Encode(string plaintext)
-        {
-            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string cipherText = "MNBVCXZLKJHGFDSAPOIUYTREWQ";
-            plaintext = plaintext.ToUpper();
-            char[] codeArray = new char[plaintext.Length];
-
-            for (var i = 0; i < plaintext.Length; i++)
-            {
-                int cipherIndex = alphabet.IndexOf(plaintext[i]);
-                codeArray[i] = cipherText[cipherIndex];
-            }
-
-            string code = new string(codeArray);
-            return code;
-        }
-
-    }                         
-}                             
+    }
+}
