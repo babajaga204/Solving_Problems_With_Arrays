@@ -1,4 +1,6 @@
-﻿using System.IO.Enumeration;
+﻿using System;
+using System.IO.Enumeration;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace Solving_Problems_With_Arrays
@@ -56,6 +58,30 @@ namespace Solving_Problems_With_Arrays
             }
 
             return c;
+        }
+
+        private static string CreateKey(string alphabet)
+        {
+            var key = alphabet.ToCharArray();
+            var random = new Random();
+
+            for (int i = 0; i < alphabet.Length; i++)
+            {
+                int randIndex2;
+                int avoidIndex2;
+
+                do
+                {
+                    var randomChar1 = key[i];
+                    var avoidIndex1 = alphabet.IndexOf(randomChar1);
+                    randIndex2 = random.Next(0, alphabet.Length - 1);
+                    if (randIndex2 >= avoidIndex1) randIndex2++;
+                    var randomChar2 = key[randIndex2];
+                    avoidIndex2 = alphabet.IndexOf(randomChar2);
+                } while (avoidIndex2 == i);
+                (key[i], key[randIndex2]) = (key[randIndex2], key[i]);
+            }
+            return new string(key);
         }
 
         private static bool Exercise3_3(int[] array, int arraySize)
